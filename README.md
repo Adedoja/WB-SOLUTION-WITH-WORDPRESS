@@ -122,13 +122,11 @@ Note: for Ubuntu server we used ubuntu user, but for RedHat you will need to use
 
 22. Update /etc/fstab file so that the mount configuration will persist after restart of the server.
 
-    - The UUID of the device will be used to update the /etc/fstab file; `sudo blkid`
+    The UUID of the device will be used to update the /etc/fstab file; `sudo blkid`
    
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/sudo%20blkid.PNG)
     
-    `sudo nano /etc/fstab` *Note: you have to install nano text editor first using `sudo yum install nano`
-   
-![](sudo nano /etc/fstab *Note: you have to install nano text editor first using sudo yum install nano)
+    `sudo nano /etc/fstab` *Note: you have to install vim text editor first using `sudo yum install vim`
 
 23. Test the configuration and reload the daemon
 
