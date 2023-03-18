@@ -19,23 +19,31 @@ Note: for Ubuntu server we used ubuntu user, but for RedHat you will need to use
 
 # STEP 1 - PREPARE A WEB-SERVER
 1. Launch an EC2 instance that will serve as "Web Server". Create 3 volumes in the same AZ as your Web Server EC2, each of 10 GiB.
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/volume%201.PNG)
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/volume%202.PNG)
 
 2. Attach all three volumes one by one to your Web Server EC2 instance.
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/volume%203.PNG)
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/volume%204.PNG)
 
 3. Open up the Linux terminal to begin configuration Use `lsblk` command to inspect what block devices are attached to the server. Notice names of your newly created devices. All devices in Linux reside in /dev/ directory. Inspect it with `ls /dev/` and make sure you see all 3 newly created block devices there – their names will likely be xvdf, xvdh, xvdg.
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/lsblk.PNG)
 
-4. Use df -h command to see all mounts and free space on your server
+4. Use df -h command to see all mounts and free space on your server.
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/df%20-h.PNG)
 
 5. Use fdisk utility to create a single partition on each of the 3 disks `sudo fdisk /dev/xvdf`
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/fdisk.PNG)
 
 6. Use `lsblk` utility to view the newly configured partition on each of the 3 disks.
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/lsblk%20utility.PNG)
 
 7. Install lvm2 package using `sudo yum install lvm2`. Run sudo lvmdiskscan command to check for available partitions.
@@ -50,29 +58,36 @@ Note: for Ubuntu server we used ubuntu user, but for RedHat you will need to use
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/pvcreate.PNG)
 
 9. Verify that your Physical volume has been created successfully by running `sudo pvs`
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/sudo%20pvs.PNG)
 
 10. Use `vgcreate` utility to add all 3 PVs to a volume group (VG). Name the VG webdata-vg
+
     `sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1`
     
 11. Verify that your VG has been created successfully by running `sudo vgs`
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/sudo%20vgs.PNG)
 
-12. Use `lvcreate` utility to create 2 logical volumes. apps-lv (Use half of the PV size), and logs-lv Use the remaining space of the PV size. ## NOTE: apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
+12. Use `lvcreate` utility to create 2 logical volumes. apps-lv (Use half of the PV size), and logs-lv. Use the remaining space of the PV size. ## NOTE: apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
 
     ```
     sudo lvcreate -n logs-lv -L 14G webdata-vg
     ```
 13. Verify that your Logical Volume has been created successfully by running `sudo lvs`
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/sudo%20lvs.PNG)
 
 14. Verify the entire setup `sudo vgdisplay -v #view complete setup - VG, PV, and LV`
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/vgdisplay.PNG)
 
 `sudo lsblk`
+
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/sudo%20lsblk.PNG)
 
 15.  Use mkfs.ext4 to format the logical volumes with ext4 filesystem
+
 `sudo mkfs -t ext4 /dev/webdata-vg/apps-lv sudo mkfs -t ext4 /dev/webdata-vg/logs-lv`
 
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/mkfs.ext4.PNG)
