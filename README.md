@@ -4,6 +4,8 @@ This repository gives a detailed step by step guide on how to prepare storage in
 # Three-tier Architecture
 Generally, web, or mobile solutions are implemented based on what is called the Three-tier Architecture.
 
+![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/3%20Arch%20New/three-tier.png)
+
 Three-tier Architecture is a client-server software architecture pattern that comprise of 3 separate layers:
 - Presentation Layer (PL): This is the user interface such as the client server or browser on your laptop.
 - Business Layer (BL): This is the backend program that implements business logic. Application or Webserver.
@@ -260,7 +262,7 @@ cd /var/www/html/wordpress `sudo vim wp-config.php`
 
 You have learned how to configure Linux storage susbystem and have also deployed a full-scale Web Solution using WordPress CMS and MySQL RDBMS.
 
-
+![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/3%20Arch%20New/congrats.PNG)
 
 
 
