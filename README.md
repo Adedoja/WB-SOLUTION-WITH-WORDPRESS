@@ -126,7 +126,7 @@ Note: for Ubuntu server we used ubuntu user, but for RedHat you will need to use
    
 ![](https://github.com/Adedoja/WEB-SOLUTION-WITH-WORDPRESS/blob/main/3%20Tier%20Arch/sudo%20blkid.PNG)
     
-    - `sudo nano /etc/fstab` *Note: you have to install nano text editor first using `sudo yum install nano`
+    `sudo nano /etc/fstab` *Note: you have to install nano text editor first using `sudo yum install nano`
    
 ![](sudo nano /etc/fstab *Note: you have to install nano text editor first using sudo yum install nano)
 
